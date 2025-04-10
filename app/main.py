@@ -20,4 +20,4 @@ def create_person_list(people: list) -> list:
             else:
                 person.husband = Person.people.get(spouse_name)
 
-    return list(Person.people.values())
+    return people
