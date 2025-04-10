@@ -4,20 +4,23 @@ class Person:
     def __init__(self, name: str, age: int) -> None:
         self.name = name
         self.age = age
+        self.wife = None
+        self.husband = None
 
         Person.people[name] = self
 
 
-def create_person_list(people: list) -> list:
-    [Person(data["name"], data["age"]) for data in people]
+def create_person_list(data_list: list) -> None:
+    # Cria as pessoas com list comprehension
+    [Person(data.get("name"), data.get("age")) for data in data_list]
 
-    for data in people:
-        person = Person.people[data["name"]]
-        spouse_name = data.get("wife") or data.get("husband")
-        if spouse_name:
-            if data.get("wife"):
-                person.wife = Person.people.get(spouse_name)
-            else:
-                person.husband = Person.people.get(spouse_name)
+    # Atribui cônjuges com segurança usando get
+    for data in data_list:
+        person = Person.people.get(data.get("name"))
+        wife_name = data.get("wife")
+        husband_name = data.get("husband")
 
-    return people
+        if wife_name:
+            person.wife = Person.people.get(wife_name)
+        if husband_name:
+            person.husband = Person.people.get(husband_name)
