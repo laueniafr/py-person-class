@@ -10,11 +10,11 @@ class Person:
         Person.people[name] = self
 
 
-def create_person_list(data_list: list) -> None:
-    # Cria as pessoas com list comprehension
+def create_person_list(data_list: list) -> list:
+    # Cria todas as pessoas
     [Person(data.get("name"), data.get("age")) for data in data_list]
 
-    # Atribui cônjuges com segurança usando get
+    # Relaciona cônjuges
     for data in data_list:
         person = Person.people.get(data.get("name"))
         wife_name = data.get("wife")
@@ -24,3 +24,6 @@ def create_person_list(data_list: list) -> None:
             person.wife = Person.people.get(wife_name)
         if husband_name:
             person.husband = Person.people.get(husband_name)
+
+    # Retorna a lista de objetos Person na mesma ordem
+    return [Person.people.get(data.get("name")) for data in data_list]
